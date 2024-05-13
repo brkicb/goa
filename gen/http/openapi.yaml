@@ -1,0 +1,258 @@
+swagger: "2.0"
+info:
+    title: House Listings Service
+    description: Service for managing house listings
+    version: 0.0.1
+host: localhost:8000
+consumes:
+    - application/json
+    - application/xml
+    - application/gob
+produces:
+    - application/json
+    - application/xml
+    - application/gob
+paths:
+    /api/listings:
+        get:
+            tags:
+                - listings
+            summary: list listings
+            description: Retrieve a list of all listings
+            operationId: listings#list
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/ListingResponse'
+            schemes:
+                - http
+        post:
+            tags:
+                - listings
+            summary: add listings
+            description: Create a listing
+            operationId: listings#add
+            parameters:
+                - name: AddRequestBody
+                  in: body
+                  required: true
+                  schema:
+                    $ref: '#/definitions/ListingsAddRequestBody'
+                    required:
+                        - slug
+                        - address
+                        - price
+            responses:
+                "201":
+                    description: Created response.
+            schemes:
+                - http
+    /api/listings/{slug}:
+        get:
+            tags:
+                - listings
+            summary: get listings
+            description: Retrieve a single listing
+            operationId: listings#get
+            parameters:
+                - name: slug
+                  in: path
+                  description: Unique identifier of the listing
+                  required: true
+                  type: string
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/ListingsGetResponseBody'
+                        required:
+                            - slug
+                            - address
+                            - price
+            schemes:
+                - http
+        put:
+            tags:
+                - listings
+            summary: update listings
+            description: Update a listing
+            operationId: listings#update
+            parameters:
+                - name: slug
+                  in: path
+                  description: Unique identifier of the listing
+                  required: true
+                  type: string
+                - name: UpdateRequestBody
+                  in: body
+                  required: true
+                  schema:
+                    $ref: '#/definitions/ListingsUpdateRequestBody'
+                    required:
+                        - listing
+            responses:
+                "204":
+                    description: No Content response.
+            schemes:
+                - http
+        delete:
+            tags:
+                - listings
+            summary: delete listings
+            description: Delete a listing
+            operationId: listings#delete
+            parameters:
+                - name: slug
+                  in: path
+                  description: Unique identifier of the listing
+                  required: true
+                  type: string
+            responses:
+                "204":
+                    description: No Content response.
+            schemes:
+                - http
+definitions:
+    ListingRequestBody:
+        title: ListingRequestBody
+        type: object
+        properties:
+            address:
+                type: string
+                description: Address of the house
+                example: Incidunt enim voluptas ullam cupiditate.
+            id:
+                type: integer
+                description: Unique identifier of the listing
+                example: 5694854476198420402
+                format: int64
+            price:
+                type: integer
+                description: Price of the house
+                example: 3089095905058865189
+                format: int64
+            slug:
+                type: string
+                description: Unique identifier of the listing
+                example: Deserunt nobis omnis perspiciatis ut corrupti.
+        description: A Listing describes a house available for sale
+        example:
+            address: Quos saepe culpa dolores quisquam exercitationem et.
+            id: 8332906037207018456
+            price: 4443136866403003373
+            slug: Et dolores voluptatibus aut tempora.
+        required:
+            - slug
+            - address
+            - price
+    ListingResponse:
+        title: ListingResponse
+        type: object
+        properties:
+            address:
+                type: string
+                description: Address of the house
+                example: Quia sint.
+            id:
+                type: integer
+                description: Unique identifier of the listing
+                example: 1443382247109725948
+                format: int64
+            price:
+                type: integer
+                description: Price of the house
+                example: 4863812074551382637
+                format: int64
+            slug:
+                type: string
+                description: Unique identifier of the listing
+                example: Deleniti optio.
+        description: A Listing describes a house available for sale
+        example:
+            address: Rerum et voluptas nisi ab.
+            id: 4224011366343314389
+            price: 1639306517271977702
+            slug: Debitis quos nulla ea libero.
+        required:
+            - slug
+            - address
+            - price
+    ListingsAddRequestBody:
+        title: ListingsAddRequestBody
+        type: object
+        properties:
+            address:
+                type: string
+                description: Address of the house
+                example: Dolores est reiciendis quod ipsum molestiae.
+            id:
+                type: integer
+                description: Unique identifier of the listing
+                example: 5447354670673331779
+                format: int64
+            price:
+                type: integer
+                description: Price of the house
+                example: 3882888190612742564
+                format: int64
+            slug:
+                type: string
+                description: Unique identifier of the listing
+                example: Consequatur quia officiis delectus sed.
+        example:
+            address: Cumque vel.
+            id: 7081388938312141097
+            price: 5268853602280845891
+            slug: Autem cumque et qui asperiores et.
+        required:
+            - slug
+            - address
+            - price
+    ListingsGetResponseBody:
+        title: ListingsGetResponseBody
+        type: object
+        properties:
+            address:
+                type: string
+                description: Address of the house
+                example: Iste est reiciendis repellendus.
+            id:
+                type: integer
+                description: Unique identifier of the listing
+                example: 5334075028502255718
+                format: int64
+            price:
+                type: integer
+                description: Price of the house
+                example: 1366455592438074216
+                format: int64
+            slug:
+                type: string
+                description: Unique identifier of the listing
+                example: Tempore at rerum assumenda sit ut hic.
+        example:
+            address: Ad nostrum ipsam est.
+            id: 7060519905369885347
+            price: 5871179293145209563
+            slug: Culpa dolor iusto.
+        required:
+            - slug
+            - address
+            - price
+    ListingsUpdateRequestBody:
+        title: ListingsUpdateRequestBody
+        type: object
+        properties:
+            listing:
+                $ref: '#/definitions/ListingRequestBody'
+        example:
+            listing:
+                address: Numquam ut sint possimus velit eos nostrum.
+                id: 7626958432408663309
+                price: 8607624620613692515
+                slug: Ducimus neque natus blanditiis quam iusto.
+        required:
+            - listing

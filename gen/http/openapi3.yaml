@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+    title: House Listings Service
+    description: Service for managing house listings
+    version: 0.0.1
+servers:
+    - url: http://localhost:8000
+paths:
+    /api/listings:
+        get:
+            tags:
+                - listings
+            summary: list listings
+            description: Retrieve a list of all listings
+            operationId: listings#list
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Listing'
+                                example:
+                                    - address: Eius et ut illo commodi vitae qui.
+                                      id: 7101026253662772559
+                                      price: 3494167506848699601
+                                      slug: Nihil consequuntur temporibus.
+                                    - address: Eius et ut illo commodi vitae qui.
+                                      id: 7101026253662772559
+                                      price: 3494167506848699601
+                                      slug: Nihil consequuntur temporibus.
+                                    - address: Eius et ut illo commodi vitae qui.
+                                      id: 7101026253662772559
+                                      price: 3494167506848699601
+                                      slug: Nihil consequuntur temporibus.
+                                    - address: Eius et ut illo commodi vitae qui.
+                                      id: 7101026253662772559
+                                      price: 3494167506848699601
+                                      slug: Nihil consequuntur temporibus.
+                            example:
+                                - address: Eius et ut illo commodi vitae qui.
+                                  id: 7101026253662772559
+                                  price: 3494167506848699601
+                                  slug: Nihil consequuntur temporibus.
+                                - address: Eius et ut illo commodi vitae qui.
+                                  id: 7101026253662772559
+                                  price: 3494167506848699601
+                                  slug: Nihil consequuntur temporibus.
+                                - address: Eius et ut illo commodi vitae qui.
+                                  id: 7101026253662772559
+                                  price: 3494167506848699601
+                                  slug: Nihil consequuntur temporibus.
+        post:
+            tags:
+                - listings
+            summary: add listings
+            description: Create a listing
+            operationId: listings#add
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Listing'
+                        example:
+                            address: Fugiat aut voluptatem non exercitationem sed omnis.
+                            id: 7084724792209511641
+                            price: 3845457252673368
+                            slug: Accusamus et assumenda corrupti.
+            responses:
+                "201":
+                    description: Created response.
+    /api/listings/{slug}:
+        delete:
+            tags:
+                - listings
+            summary: delete listings
+            description: Delete a listing
+            operationId: listings#delete
+            parameters:
+                - name: slug
+                  in: path
+                  description: Unique identifier of the listing
+                  required: true
+                  schema:
+                    type: string
+                    description: Unique identifier of the listing
+                    example: Necessitatibus ut eaque vero.
+                  example: Libero doloribus.
+            responses:
+                "204":
+                    description: No Content response.
+        get:
+            tags:
+                - listings
+            summary: get listings
+            description: Retrieve a single listing
+            operationId: listings#get
+            parameters:
+                - name: slug
+                  in: path
+                  description: Unique identifier of the listing
+                  required: true
+                  schema:
+                    type: string
+                    description: Unique identifier of the listing
+                    example: Iste sed voluptate.
+                  example: Similique quos ducimus deserunt quia.
+            responses:
+                "200":
+                    description: OK response.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Listing'
+                            example:
+                                address: Ipsa odit non accusamus qui.
+                                id: 596497666765422570
+                                price: 8284575409095266097
+                                slug: Maxime molestiae quia ab voluptatum quis omnis.
+        put:
+            tags:
+                - listings
+            summary: update listings
+            description: Update a listing
+            operationId: listings#update
+            parameters:
+                - name: slug
+                  in: path
+                  description: Unique identifier of the listing
+                  required: true
+                  schema:
+                    type: string
+                    description: Unique identifier of the listing
+                    example: Sed quo necessitatibus.
+                  example: Porro et cum.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateRequestBody'
+                        example:
+                            listing:
+                                address: Numquam ut sint possimus velit eos nostrum.
+                                id: 7626958432408663309
+                                price: 8607624620613692515
+                                slug: Ducimus neque natus blanditiis quam iusto.
+            responses:
+                "204":
+                    description: No Content response.
+components:
+    schemas:
+        Listing:
+            type: object
+            properties:
+                address:
+                    type: string
+                    description: Address of the house
+                    example: Aut nihil et corrupti beatae tempore qui.
+                id:
+                    type: integer
+                    description: Unique identifier of the listing
+                    example: 1788157382220851053
+                    format: int64
+                price:
+                    type: integer
+                    description: Price of the house
+                    example: 2319774453821947599
+                    format: int64
+                slug:
+                    type: string
+                    description: Unique identifier of the listing
+                    example: Explicabo iusto.
+            description: A Listing describes a house available for sale
+            example:
+                address: Sunt sit ratione voluptatem.
+                id: 4780307109737233824
+                price: 4478138418068856746
+                slug: Rerum magnam aliquid nemo.
+            required:
+                - slug
+                - address
+                - price
+        UpdateRequestBody:
+            type: object
+            properties:
+                listing:
+                    $ref: '#/components/schemas/Listing'
+            example:
+                listing:
+                    address: Numquam ut sint possimus velit eos nostrum.
+                    id: 7626958432408663309
+                    price: 8607624620613692515
+                    slug: Ducimus neque natus blanditiis quam iusto.
+            required:
+                - listing
+tags:
+    - name: listings
+      description: The listings service provides operations on managing house listings.
